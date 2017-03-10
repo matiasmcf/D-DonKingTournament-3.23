@@ -1,0 +1,117 @@
+Versión 2.4:
+		
+	*Cambios:
+		-Execlp funciona si tiene './' al principio en el primer parámetro
+		-Se agregó la clase CTimer para manejar tiempos (resurrección de mario, duración del martillo)
+		-Se crea un thread para controlar los temporizadores
+		-Se agregó "sleep(1)" a los threads que realizaban "while(1)" para reducir el uso del procesador
+		-Las llamas y los barriles ahora se generan correctamente
+
+	*Pendiente:
+		-Error de "double free"
+		-Crear el martillo (Necestio los sprites xD)
+		-Colocar las animaciones de los monos
+		-Comunicación entre los servidores de partidas y el servidor de torneo
+		-Avanzar con el servidor de torneo
+		-El thread para el manejo de eventos está creado, pero comentado por el incremento en el uso de la CPU
+
+Version 2.3:
+		-Se modifico el proceso Monitor. Funciona a base de scripts y monitorea si se creo o modificaron los archivos que contienen
+		-los PIDS de los procesos. Pareceria estar andando. Faltan mas pruebas de todas formas.
+		-Despues me fijo por que a veces duplica el printf que informa que modulo se cerro. Creo que es porque debe estar
+		-guardando los pids mas de una vez. Minimo error de sincronizacion, pero hasta donde lo probe, esta andando con
+		 el server y dos clientes en la misma maquina. Lo volteo y lo vuelven a levantar. Y si se cierra el server de Torneo o los 
+		 clientes, finaliza correctamente todo. 
+
+	*Pendiente:
+		-Sigo investigando el problema del execlp. Por lo menos, los permisos de archivo no son.
+
+Version 2.2:
+		-Se unifico todo en una sola carpeta. El make run solo tiene ./serverTorneo. El donkey hay que ejecutarlo con ./donkey
+		-Comente lo de SDL del server porque no me andaba.
+		-Esta comentado lo del monitor. Espero se entienda.
+		-Se agrego a la libreria de semafaros el "obtenerMutexEn0" para tener un mutex inicializado en 0
+		-Proceso monitor funcionando. Se probo con el serverTorneo corriendo y con dos clientes. Cuando llega al execlp, lanza error.
+		-No lo segui probando porque me tenia que ir. Pero cierra todo cuando se cae el serverTorneo o algun cliente
+		-Si esta solo con algun proceso, y se cae el monitor, el proceso lo relanza
+		
+
+	*Pendiente:
+		-Me falta probar cuando este corriendo el serverTorneo y los dos clientes, si volteo el monitor y no se arma quilombo
+		 para relanzarlo. 
+		-Me tira error el execlp y en teoria, los FD estan bien. Tira la funcion execlp en si. Execv me anda, pero por ahi en el lab
+		 execv no anda y hay que cambiarla. 
+
+
+Version 2.1:
+		-Proceso monitor funciona bien cuando se finaliza un programa. Cierra los recursos. Ocurren problemas a partir de la primera
+		vez que se lo relanza por algun otro proceso. (puede estar fallando el tema de la cola de mensajes.)
+		 para utilizar el proceso Torneo sin que moleste el monitor, hay que comentar el raise(SIGUSR1);
+		 no comente codigo todavia.
+
+	*Pendiente:
+		-Me queda seguir revisando y depurando el monitor(SEBA).
+
+Version 2.0:
+		-semaforosLib ahora tiene funciones para semaforos POSIX nombrados. Esto permite sincronizar procesos no emparentados.
+		- El nombre a que se le otorga a los semaforos debe estar precedido por una /. Ejemplo: "/mtxprueba"		
+		- Makefile compila correctamente. Pruebenlo
+		-SEBA: Continuo con el proceso monitor. Mas que un archivo, voy a mandar los PIDS a una cola de mensajes.
+
+
+Version 1.9:
+		-Andando con mas de un servidor.
+
+
+Versión 1.8
+	
+	*Cambios:
+
+		-Corregidos numerosos bugs
+		-Agregados servidores
+		-El cliente ahora maneja solo un Mario y se limita a dibujar el otro
+		-El servidor de partidas se limita a retransmitir la información entre los clientes
+
+	*Pendiente:
+
+		-Dibujar el fondo aumenta el uso del CPU (Sin: 5% Con: 18%)
+		-Creación y manejo de llamas y barriles
+		-Mario con el martillo (usar timers)
+		-Archivo de configuración del servidor
+		-Comunicación de los servidores de partidas con el servidor del torneo
+		-Parte gráfica del servidor del torneo
+		-Ver Syllabus
+
+Versión 1.7
+	
+	*Cambios:
+
+		-Corregido el uso del CPU en la pantalla inicial
+		-El recorrido de los barriles ahora se almacena en un vector 'recorrido' propio de cada barril, al pasar 
+		 sobre una escalera se pregunta si recorrido[nroEscalera] es distinto de '0' para usarla
+
+	*Pendiente:
+
+		-Dibujar el fondo aumenta el uso del CPU (Sin: 5% Con: 18%)
+
+Versión 1.6
+
+	*Cambios:
+
+		-Corregidas imágenes con bordes negros y magenta
+		-Ahora Mario puede saltar las llamas
+		-Mejorada la precisión del sistema de colisiones
+		-Mejorado el manejo de comentarios para facilitar la navegación en el código
+		-Arreglado un bug que no permitía salir del juego al tocar la 'x'(cerrar) durante la pantalla de inicio
+		-Arreglado un bug que imprimía caracteres extraños si el jugador no ingresaba su nombre
+		-Modificada la forma de tratar el fondo y los nombres de los jugadores
+			Las funciones 	cargarImagen()'
+							cargarTexto()
+							cargarRescateEnPantalla()
+							cargarNombreEnPantalla()
+			leían archivos constantemente.
+
+	*Pendiente:
+
+		-Falta corregir el uso del CPU durante la pantalla inicial
+		-Dibujar el fondo aumenta el uso del CPU (Sin: 5% Con: 18%)
